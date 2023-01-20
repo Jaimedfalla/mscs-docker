@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ms-users" />
+        <module name="ms-courses" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -17,6 +18,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ms-courses" options="-parameters" />
       <module name="ms-users" options="-parameters" />
       <module name="mscs-docker (1) (org.course.mscs-docker)" options="-parameters" />
       <module name="mscs-users" options="-parameters" />
