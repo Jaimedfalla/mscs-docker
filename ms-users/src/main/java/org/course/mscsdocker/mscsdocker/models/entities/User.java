@@ -1,6 +1,8 @@
 package org.course.mscsdocker.mscsdocker.models.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,15 +18,17 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long Id;
+    private Long id;
 
-    @Column(name = "name")
-    private String Name;
+    @NotBlank
+    private String name;
 
-    @Column(unique = true,name="email")
-    private String Email;
+    @NotBlank
+    @Email
+    @Column(unique = true)
+    private String email;
 
+    @NotBlank
     @Column(name = "password")
-    private String Password;
+    private String password;
 }

@@ -1,4 +1,4 @@
-package org.course.mscsdocker.mscsdocker.services;
+package org.course.mscsdocker.mscsdocker.application.services;
 
 import org.course.mscsdocker.mscsdocker.models.entities.User;
 
@@ -10,4 +10,6 @@ public interface IUserService {
     Optional<User> findById(Long id);
     User save(User user);
     void delete(Long id);
+
+    boolean findByEmail(String email);
 }

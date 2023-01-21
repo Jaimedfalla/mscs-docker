@@ -1,4 +1,4 @@
-package org.course.mscsdocker.mscsdocker.services;
+package org.course.mscsdocker.mscsdocker.application.services;
 
 import org.course.mscsdocker.mscsdocker.models.entities.User;
 import org.course.mscsdocker.mscsdocker.repositories.IUsuarioRepository;
@@ -38,4 +38,12 @@ public class UserService implements  IUserService{
     public void delete(Long id) {
         this._repository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean findByEmail(String email) {
+        return _repository.existsByEmail(email);
+    }
+
+
 }

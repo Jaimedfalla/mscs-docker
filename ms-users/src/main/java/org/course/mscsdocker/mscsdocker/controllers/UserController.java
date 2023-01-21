@@ -1,14 +1,16 @@
 package org.course.mscsdocker.mscsdocker.controllers;
 
+import jakarta.validation.Valid;
+import org.course.mscsdocker.mscsdocker.application.helpers.Validator;
 import org.course.mscsdocker.mscsdocker.models.entities.User;
-import org.course.mscsdocker.mscsdocker.services.IUserService;
+import org.course.mscsdocker.mscsdocker.application.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -33,15 +35,26 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> save(@RequestBody User user){
+    public ResponseEntity<?> save(@Valid @RequestBody User user, BindingResult result){
+        if(result.hasErrors()) return Validator.getResultValidation(result);
+
+        if(_service.findByEmail(user.getEmail()))
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error","User already exists"));
+
         return ResponseEntity.status(HttpStatus.CREATED).body(_service.save(user));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@RequestBody User user,@PathVariable Long id){
+    public ResponseEntity<?> update(@Valid @RequestBody User user,BindingResult result, @PathVariable Long id){
+        if(result.hasErrors()) return Validator.getResultValidation(result);
+
         Optional<User> userOpt = _service.findById(id);
         if(userOpt.isPresent()){
             User userDb = userOpt.get();
+
+            if(!user.getEmail().equalsIgnoreCase(userDb.getEmail()) &&   _service.findByEmail(user.getEmail()))
+                return ResponseEntity.badRequest().body(Collections.singletonMap("error","User already exists"));
+
             userDb.setName(user.getName());
             userDb.setEmail(user.getEmail());
             userDb.setPassword(user.getPassword());
