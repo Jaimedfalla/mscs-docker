@@ -1,0 +1,39 @@
+version: '3.9'
+
+networks:
+  mynetwork:
+    name: ${APP_NETWORK}
+
+services:
+  msvc-users:
+    container_name: ${SRV_USERS}
+    build:
+      context: ../
+      dockerfile: ./ms-users/Dockerfile
+    env_file:
+      - .env
+      - users.env
+    ports:
+      - ${USERS_PORT}:${USERS_PORT}
+    networks:
+      - mynetwork
+    restart: always
+    depends_on:
+      - mariadb
+
+  msvc-courses:
+    container_name: ${SRV_COURSES}
+    build:
+      context: ../
+      dockerfile: ./ms-courses/Dockerfile
+    env_file:
+      - .env
+      - courses.env
+    ports:
+      - ${COURSES_PORT}:${COURSES_PORT}
+    networks:
+      - mynetwork
+    depends_on:
+      - msvc-users
+      - postgresql
+    restart: always
