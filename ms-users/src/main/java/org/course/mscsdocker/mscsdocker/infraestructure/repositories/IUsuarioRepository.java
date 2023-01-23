@@ -1,6 +1,6 @@
-package org.course.mscsdocker.mscsdocker.repositories;
+package org.course.mscsdocker.mscsdocker.infraestructure.repositories;
 
-import org.course.mscsdocker.mscsdocker.models.entities.User;
+import org.course.mscsdocker.mscsdocker.infraestructure.entities.models.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

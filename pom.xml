@@ -9,8 +9,8 @@
         <version>3.0.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.course</groupId>
-    <artifactId>mscs-docker</artifactId>
+    <groupId>org.jefalla.springcloud.msvc</groupId>
+    <artifactId>curso-kubernetes</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>

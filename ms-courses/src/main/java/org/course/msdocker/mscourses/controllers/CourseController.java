@@ -30,7 +30,7 @@ public class CourseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> detail(@PathVariable Long id){
-        Optional<Course> userOpt = this._service.findById(id);
+        Optional<Course> userOpt = this._service.findByIdUsers(id);
         if(userOpt.isPresent()){
             return ResponseEntity.ok(userOpt.get());
         }
@@ -108,5 +108,11 @@ public class CourseController {
         }catch (FeignException e){
             return ResponseEntity.internalServerError().body(Collections.singletonMap("error","Error in comunication channel"+e.getMessage()));
         }
+    }
+
+    @DeleteMapping("/delete-user/{id}")
+    public ResponseEntity<?> deleteUserById(@PathVariable Long id){
+        _service.deleteUserById(id);
+        return ResponseEntity.noContent().build();
     }
 }

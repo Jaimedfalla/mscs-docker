@@ -1,4 +1,4 @@
-package org.course.mscsdocker.mscsdocker.models.entities;
+package org.course.mscsdocker.mscsdocker.infraestructure.entities.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

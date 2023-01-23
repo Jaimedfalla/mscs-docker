@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseService implements  ICourseService{
@@ -34,6 +35,22 @@ public class CourseService implements  ICourseService{
     @Transactional(readOnly = true)
     public Optional<Course> findById(Long id) {
         return _repository.findById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Course> findByIdUsers(Long id) {
+        Optional<Course> courseOpt = _repository.findById(id);
+        if(!courseOpt.isPresent()) return Optional.empty();
+
+        Course course = courseOpt.get();
+        if(!course.getCoursesUsers().isEmpty()){
+            List<Long> ids= course.getCoursesUsers().stream()
+                    .map(CourseUser::getUserId).toList();
+            course.setUsers(_userClient.findAllByIds(ids));
+        }
+
+        return Optional.of(course);
     }
 
     @Override
@@ -70,6 +87,12 @@ public class CourseService implements  ICourseService{
         return this.manageUser(user,idCourse,
                 u -> _userClient.createUser(u),
                 new EliminadorHandler());
+    }
+
+    @Override
+    @Transactional
+    public void deleteUserById(Long id) {
+        _repository.deleteUserById(id);
     }
 
     private Optional<User> manageUser(User user, Long idCourse, Function<User,User> handle, IHandleable handler){

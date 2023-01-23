@@ -2,7 +2,7 @@ package org.course.mscsdocker.mscsdocker.controllers;
 
 import jakarta.validation.Valid;
 import org.course.mscsdocker.mscsdocker.application.helpers.Validator;
-import org.course.mscsdocker.mscsdocker.models.entities.User;
+import org.course.mscsdocker.mscsdocker.infraestructure.entities.models.User;
 import org.course.mscsdocker.mscsdocker.application.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -75,5 +75,10 @@ public class UserController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/users-courses")
+    public ResponseEntity<?> getUsersByCourse(@RequestParam List<Long> ids){
+        return ResponseEntity.ok(_service.findByIds(ids));
     }
 }

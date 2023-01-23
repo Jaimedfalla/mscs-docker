@@ -1,7 +1,8 @@
 package org.course.mscsdocker.mscsdocker.application.services;
 
-import org.course.mscsdocker.mscsdocker.models.entities.User;
-import org.course.mscsdocker.mscsdocker.repositories.IUsuarioRepository;
+import org.course.mscsdocker.mscsdocker.infraestructure.clientsHttp.CourseClientRest;
+import org.course.mscsdocker.mscsdocker.infraestructure.entities.models.User;
+import org.course.mscsdocker.mscsdocker.infraestructure.repositories.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,9 @@ public class UserService implements  IUserService{
 
     @Autowired
     private IUsuarioRepository _repository;
+
+    @Autowired
+    private CourseClientRest _clientHttp;
 
     @Override
     @Transactional(readOnly = true)
@@ -37,6 +41,13 @@ public class UserService implements  IUserService{
     @Transactional
     public void delete(Long id) {
         this._repository.deleteById(id);
+        _clientHttp.deleteUser(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<User> findByIds(Iterable<Long> ids) {
+        return (List<User>)_repository.findAllById(ids);
     }
 
     @Override
