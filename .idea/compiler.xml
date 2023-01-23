@@ -12,6 +12,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="mscs-docker" target="17" />
       <module name="mscs-docker (1) (org.course.mscs-docker)" target="11" />
       <module name="mscs-users" target="11" />
     </bytecodeTargetLevel>
