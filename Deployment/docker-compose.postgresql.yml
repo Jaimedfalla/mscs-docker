@@ -21,14 +21,3 @@ services:
       - "5432:5432"
     networks:
       - mynetwork
-
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4
-    env_file:
-      - pgadmin.env
-      - .env
-    ports: 
-      - "5050:80"
-    networks:
-      - mynetwork

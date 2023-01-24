@@ -22,17 +22,3 @@ services:
      - mariadb:/var/lib/mysql
     networks:
       - mynetwork
-
-  phpmyadmin:
-    container_name: myadmin
-    image: phpmyadmin
-    restart: always
-    env_file:
-      - .env
-    ports:
-      - "8081:80"
-    environment:
-      - PMA_HOST=mariadb
-      - PMA_PORT=3306 
-    networks:
-      - mynetwork
